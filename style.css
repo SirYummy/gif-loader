@@ -3,6 +3,7 @@ body {
   margin: 0;
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
+  overflow-x : hidden;
 }
 .container {
   display: flex;
@@ -27,15 +28,17 @@ body {
 
 #gif-grid {
   display: flex;
+  width : 100%;
   flex-direction: row;
   flex-wrap : wrap;
-  align-items: center;
+  align-items: left;
 }
 
 #gif-grid figure {
   border: 3px solid mistyrose;
   border-radius: 2%;
   text-align: center;
+  display : none;
 }
 
 #gif-grid figure figcaption {
