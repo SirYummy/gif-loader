@@ -1,5 +1,5 @@
 body {
-  background: rgb(42, 42, 43);
+  background: linear-gradient(to bottom, #74ABE2, #5563DE);
   margin: 0;
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
@@ -18,26 +18,28 @@ body {
   font-size: 1.5rem;
 }
 
-#gif-search-button {
+#gif-search-button, #gif-search-limit {
   font-size: 1.5rem;
   background: #4CAF50;
   color: white;
   border: none;
 }
 
-#gif-container {
+#gif-grid {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap : wrap;
   align-items: center;
 }
 
-#gif-container img {
-  max-width: 100%;
+#gif-grid figure {
   border: 3px solid mistyrose;
   border-radius: 2%;
+  text-align: center;
 }
 
-#gif-container p {
+#gif-grid figure figcaption {
   text-align: center;
   color: goldenrod;
+  font-size : .8rem;
 }
