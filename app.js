@@ -1,87 +1,91 @@
-const API_KEY = 'CZoppU1XxfCevaD9Ilrr9kQb0vXWC1su'
-const BASE_URL = `http://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=`
+(() => {
 
-const gifForm = document.querySelector('#gif-form')
-const gifGrid = document.querySelector('#gif-grid')
-const gifInput = gifForm.querySelector('#gif-search-input')
-const gifLimiter = gifForm.querySelector('#gif-search-limit')
+    const API_KEY = 'CZoppU1XxfCevaD9Ilrr9kQb0vXWC1su'
+    const BASE_URL = `http://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=`
 
-let fetchLimit = gifLimiter.value
-let searchText = gifInput.value
+    const gifForm = document.querySelector('#gif-form')
+    const gifGrid = document.querySelector('#gif-grid')
+    const gifInput = gifForm.querySelector('#gif-search-input')
+    const gifLimiter = gifForm.querySelector('#gif-search-limit')
 
-gifInput.focus()
+    let fetchLimit = gifLimiter.value
+    let searchText = gifInput.value
 
-gifForm.addEventListener('submit', (e) => {
-    e.preventDefault()
-   
-    fetchLimit = gifLimiter.value
-    searchText = gifInput.value
+    gifInput.focus()
 
-    removeChildren(gifGrid)
+    gifForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+    
+        fetchLimit = gifLimiter.value
+        searchText = gifInput.value
 
-    fetchGifs(searchText)
-    .then(populateGrid)
-})
+        removeChildren(gifGrid)
 
-const fetchGifs = (searchTerm) => {
-    return fetch(`${BASE_URL}${searchTerm}`)
-    .then(res => res.json())
-    .then(data => data.data.filter((item, index) => {
-       return index < fetchLimit ? item : ''
-    }))
-}
+        fetchGifs(searchText)
+        .then(populateGrid)
+    })
 
-const populateGrid = (data) => {
-    if(data.length) {
-        data.map((gif, gifIndex) => {
-            let gifInstance = appendGif(gif, gifIndex)
-            renderGif(gifInstance, gifIndex)
-        })
-    } else {
-        noResults()
+    const fetchGifs = (searchTerm) => {
+        return fetch(`${BASE_URL}${searchTerm}`)
+        .then(res => res.json())
+        .then(data => data.data.filter((item, index) => {
+        return index < fetchLimit ? item : ''
+        }))
     }
-}
 
-const noResults = () => {
-    gifGrid.innerText = '0 results found'
-}
+    const populateGrid = (data) => {
+        if(data.length) {
+            data.map((gif, gifIndex) => {
+                let gifInstance = appendGif(gif, gifIndex)
+                renderGif(gifInstance, gifIndex)
+            })
+        } else {
+            noResults()
+        }
+    }
 
-const appendGif = (gif, gifIndex) => {
-    
-    const gifContainer = document.createElement('figure')
-    const gifImage = document.createElement('img')
-    const gifCaption = document.createElement('figcaption')
+    const noResults = () => {
+        gifGrid.innerText = '0 results found'
+    }
 
-    gifContainer.appendChild(gifImage)
-    gifContainer.appendChild(gifCaption)
+    const appendGif = (gif, gifIndex) => {
+        
+        const gifContainer = document.createElement('figure')
+        const gifImage = document.createElement('img')
+        const gifCaption = document.createElement('figcaption')
 
-    gifImage.setAttribute('src', gif.images.fixed_height.url)
-    gifCaption.innerText = gif.title
-    gifGrid.appendChild(gifContainer)
+        gifContainer.appendChild(gifImage)
+        gifContainer.appendChild(gifCaption)
 
-    return gifContainer
-    
-}
+        gifImage.setAttribute('src', gif.images.fixed_height.url)
+        gifCaption.innerText = gif.title
+        gifGrid.appendChild(gifContainer)
 
-const renderGif = (gifInstance, gifIndex) => {
-    const gifAnimation = 'fadeInUp'
+        return gifContainer
+        
+    }
 
-    if(!gifIndex) {
-        animate(gifInstance, gifAnimation)
-    } else {
-        setTimeout(() => {
+    const renderGif = (gifInstance, gifIndex) => {
+        const gifAnimation = 'fadeInUp'
+
+        if(!gifIndex) {
             animate(gifInstance, gifAnimation)
-        }, 500 * gifIndex)
+        } else {
+            setTimeout(() => {
+                animate(gifInstance, gifAnimation)
+            }, 500 * gifIndex)
+        }
     }
-}
 
-const animate = (animateMe, transitionType) => {
-    animateMe.style.display = 'block'
-    animateMe.setAttribute('class', `animated ${transitionType}`)
-}
-
-const removeChildren = (parent) => {
-    while(parent.hasChildNodes()) {
-        parent.removeChild(parent.lastChild)
+    const animate = (animateMe, transitionType) => {
+        animateMe.style.display = 'block'
+        animateMe.setAttribute('class', `animated ${transitionType}`)
     }
-}
+
+    const removeChildren = (parent) => {
+        while(parent.hasChildNodes()) {
+            parent.removeChild(parent.lastChild)
+        }
+    }
+
+})()
