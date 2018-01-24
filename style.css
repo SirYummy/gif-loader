@@ -26,6 +26,10 @@ body {
   border: none;
 }
 
+#gif-search-limit {
+  width: 48px;
+}
+
 #gif-grid {
   display: flex;
   width : 100%;
