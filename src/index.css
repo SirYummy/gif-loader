@@ -1,0 +1,5 @@
+body {
+    color : red;
+    background-image: url('./webpack-logo.gif');
+    background-size: cover;
+}
